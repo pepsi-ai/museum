@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "展览详情",
+  "navigationBarTextStyle": "black",
+  "navigationBarBackgroundColor": "#ffffff",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "privacy-modal": "/components/privacy-modal/index",
+    "phone-auth-modal": "/components/phone-auth-modal/index"
+  }
+} 

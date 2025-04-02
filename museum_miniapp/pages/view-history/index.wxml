@@ -1,0 +1,72 @@
+<view class="container">
+  <view class="history-header">
+    <text class="title">浏览历史</text>
+  </view>
+  
+  <!-- 历史记录列表 -->
+  <scroll-view scroll-y="true" class="history-content">
+    <!-- 今天的记录 -->
+    <block wx:if="{{todayHistory.length > 0}}">
+      <view class="date-header">今天</view>
+      <view class="history-list">
+        <view class="history-item" wx:for="{{todayHistory}}" wx:key="id" bindtap="onItemTap" data-id="{{item.id}}" data-type="{{item.type}}">
+          <image class="history-image" src="{{baseUrl}}/file/getPic?name={{item.colPic}}" mode="aspectFill"></image>
+          <view class="history-info">
+            <view class="history-title">{{item.title}}</view>
+            <view class="history-desc">{{item.desc}}</view>
+            <view class="history-time">{{item.viewTime}}</view>
+          </view>
+          <view class="delete-btn" catchtap="onDeleteItem" data-id="{{item.id}}">
+            <image src="/images/icons/delete.png" class="delete-icon"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+    
+    <!-- 昨天的记录 -->
+    <block wx:if="{{yesterdayHistory.length > 0}}">
+      <view class="date-header">昨天</view>
+      <view class="history-list">
+        <view class="history-item" wx:for="{{yesterdayHistory}}" wx:key="id" bindtap="onItemTap" data-id="{{item.id}}" data-type="{{item.type}}">
+          <image class="history-image" src="{{baseUrl}}/file/getPic?name={{item.colPic}}" mode="aspectFill"></image>
+          <view class="history-info">
+            <view class="history-title">{{item.title}}</view>
+            <view class="history-desc">{{item.desc}}</view>
+            <view class="history-time">{{item.viewTime}}</view>
+          </view>
+          <view class="delete-btn" catchtap="onDeleteItem" data-id="{{item.id}}">
+            <image src="/images/icons/delete.png" class="delete-icon"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+    
+    <!-- 更早的记录 -->
+    <block wx:if="{{earlierHistory.length > 0}}">
+      <view class="date-header">更早</view>
+      <view class="history-list">
+        <view class="history-item" wx:for="{{earlierHistory}}" wx:key="id" bindtap="onItemTap" data-id="{{item.id}}" data-type="{{item.type}}">
+          <image class="history-image" src="{{baseUrl}}/file/getPic?name={{item.colPic}}" mode="aspectFill"></image>
+          <view class="history-info">
+            <view class="history-title">{{item.title}}</view>
+            <view class="history-desc">{{item.desc}}</view>
+            <view class="history-time">{{item.viewTime}}</view>
+          </view>
+          <view class="delete-btn" catchtap="onDeleteItem" data-id="{{item.id}}">
+            <image src="/images/icons/delete.png" class="delete-icon"></image>
+          </view>
+        </view>
+      </view>
+    </block>
+    
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{todayHistory.length === 0 && yesterdayHistory.length === 0 && earlierHistory.length === 0}}">
+      <text>暂无浏览记录</text>
+    </view>
+  </scroll-view>
+  
+  <!-- 清空历史按钮 -->
+  <view class="clear-btn" bindtap="onClearHistory">
+    <text>清空历史</text>
+  </view>
+</view> 

@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="header">
+    <text class="title">修改登录密码</text>
+  </view>
+
+  <view class="form-container">
+    <view class="form-item">
+      <text class="label">当前密码</text>
+      <input class="input" type="password" placeholder="请输入当前密码" value="{{currentPassword}}" bindinput="onCurrentPasswordInput" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">新密码</text>
+      <input class="input" type="password" placeholder="请输入新密码" value="{{newPassword}}" bindinput="onNewPasswordInput" />
+      <text class="tips">密码长度为8-20位，必须包含字母和数字</text>
+    </view>
+
+    <view class="form-item">
+      <text class="label">确认新密码</text>
+      <input class="input" type="password" placeholder="请再次输入新密码" value="{{confirmPassword}}" bindinput="onConfirmPasswordInput" />
+    </view>
+  </view>
+
+  <button class="submit-btn {{submitDisabled ? 'disabled' : ''}}" bindtap="submitForm" disabled="{{submitDisabled}}">
+    确认修改
+  </button>
+</view> 

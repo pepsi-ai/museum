@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.museum.mapper.ReserveDetialMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.museum.damain.po.MsReserveDetial">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="user_name" property="userName" />
+        <result column="res_id" property="resId" />
+        <result column="exhibition_id" property="exhibitionId" />
+        <result column="exhibition_title" property="exhibitionTitle" />
+        <result column="cate_id" property="cateId" />
+        <result column="cate_title" property="cateTitle" />
+        <result column="res_type" property="resType" />
+        <result column="res_date" property="resDate" />
+        <result column="res_time" property="resTime" />
+        <result column="vld_stat" property="vldStat" />
+        <result column="res_session" property="resSession" />
+    </resultMap>
+    
+    <!-- 覆盖MyBatis-Plus默认的insert方法 -->
+    <insert id="insert" parameterType="com.museum.damain.po.MsReserveDetial" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ms_reserve_detial (
+            user_id, user_name, res_id, exhibition_id, exhibition_title, cate_id, cate_title, 
+            res_type, res_date, res_time, vld_stat, res_session
+        ) VALUES (
+            #{userId}, #{userName}, #{resId}, #{exhibitionId}, #{exhibitionTitle}, #{cateId}, #{cateTitle}, 
+            #{resType}, #{resDate}, #{resTime}, #{vldStat}, #{resSession}
+        )
+    </insert>
+    
+    <!-- 自定义insertDetail方法 -->
+    <insert id="insertDetail" parameterType="com.museum.damain.po.MsReserveDetial" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO ms_reserve_detial (
+            user_id, user_name, res_id, exhibition_id, exhibition_title, cate_id, cate_title, 
+            res_type, res_date, res_time, vld_stat, res_session
+        ) VALUES (
+            #{userId}, #{userName}, #{resId}, #{exhibitionId}, #{exhibitionTitle}, #{cateId}, #{cateTitle}, 
+            #{resType}, #{resDate}, #{resTime}, #{vldStat}, #{resSession}
+        )
+    </insert>
+    
+    <!-- 添加一个直接执行的安全插入方法 -->
+    <insert id="insertSafe">
+        INSERT INTO ms_reserve_detial (
+            user_id, user_name, res_id, exhibition_id, exhibition_title, cate_id, cate_title, 
+            res_type, res_date, res_time, vld_stat, res_session
+        ) VALUES (
+            #{userId}, #{userName}, #{resId}, #{exhibitionId}, #{exhibitionTitle}, #{cateId}, #{cateTitle}, 
+            #{resType}, #{resDate}, #{resTime}, #{vldStat}, #{resSession}
+        )
+    </insert>
+    
+    <!-- 覆盖MyBatis-Plus默认的update方法 -->
+    <update id="updateById" parameterType="com.museum.damain.po.MsReserveDetial">
+        UPDATE ms_reserve_detial
+        SET 
+            user_id = #{userId},
+            user_name = #{userName},
+            res_id = #{resId},
+            exhibition_id = #{exhibitionId},
+            exhibition_title = #{exhibitionTitle},
+            cate_id = #{cateId},
+            cate_title = #{cateTitle},
+            res_type = #{resType},
+            res_date = #{resDate},
+            res_time = #{resTime},
+            vld_stat = #{vldStat},
+            res_session = #{resSession}
+        WHERE id = #{id}
+    </update>
+    
+    <!-- 自定义updateDetail方法 -->
+    <update id="updateDetail" parameterType="com.museum.damain.po.MsReserveDetial">
+        UPDATE ms_reserve_detial
+        SET 
+            user_id = #{userId},
+            user_name = #{userName},
+            res_id = #{resId},
+            exhibition_id = #{exhibitionId},
+            exhibition_title = #{exhibitionTitle},
+            cate_id = #{cateId},
+            cate_title = #{cateTitle},
+            res_type = #{resType},
+            res_date = #{resDate},
+            res_time = #{resTime},
+            vld_stat = #{vldStat},
+            res_session = #{resSession}
+        WHERE id = #{id}
+    </update>
+    
+    <!-- 根据ID查询预约详情 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM ms_reserve_detial WHERE id = #{id}
+    </select>
+    
+    <!-- 根据预约ID和用户ID查询预约详情 -->
+    <select id="selectByResIdAndUserId" resultMap="BaseResultMap">
+        SELECT * FROM ms_reserve_detial 
+        WHERE res_id = #{resId} AND user_id = #{userId}
+    </select>
+    
+    <!-- 根据预约ID查询所有有效预约详情 -->
+    <select id="selectValidByResId" resultMap="BaseResultMap">
+        SELECT * FROM ms_reserve_detial 
+        WHERE res_id = #{resId} AND vld_stat = '1'
+    </select>
+    
+    <!-- 分页查询预约详情列表 -->
+    <select id="listDetailReserve" resultMap="BaseResultMap">
+        SELECT * FROM ms_reserve_detial
+        <where>
+            <if test="name != null and name != ''">
+                AND (user_name LIKE CONCAT('%', #{name}, '%') OR cate_title LIKE CONCAT('%', #{name}, '%'))
+            </if>
+        </where>
+        ORDER BY id DESC
+    </select>
+</mapper>

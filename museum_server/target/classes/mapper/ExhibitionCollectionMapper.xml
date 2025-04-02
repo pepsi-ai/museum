@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.museum.mapper.ExhibitionCollectionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.museum.damain.po.MsExhibitionCollection">
+        <id column="id" property="id" />
+        <result column="exhibition_id" property="exhibitionId" />
+        <result column="collection_id" property="collectionId" />
+        <result column="crt_tm" property="crtTm" />
+    </resultMap>
+    
+    <!-- 批量插入展览藏品关系 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO ms_exhibition_collection (exhibition_id, collection_id, crt_tm)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.exhibitionId}, #{item.collectionId}, #{item.crtTm})
+        </foreach>
+    </insert>
+    
+    <!-- 根据展览ID删除关联关系 -->
+    <delete id="deleteByExhibitionId">
+        DELETE FROM ms_exhibition_collection WHERE exhibition_id = #{exhibitionId}
+    </delete>
+    
+    <!-- 根据展览ID查询关联的藏品ID列表 -->
+    <select id="selectCollectionIdsByExhibitionId" resultType="java.lang.Integer">
+        SELECT collection_id FROM ms_exhibition_collection WHERE exhibition_id = #{exhibitionId}
+    </select>
+    
+</mapper> 

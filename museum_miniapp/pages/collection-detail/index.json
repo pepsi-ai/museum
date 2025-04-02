@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "藏品详情",
+  "usingComponents": {
+    "privacy-modal": "/components/privacy-modal/index",
+    "phone-auth-modal": "/components/phone-auth-modal/index"
+  }
+} 

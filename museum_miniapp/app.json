@@ -1,0 +1,55 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/collection/index",
+    "pages/user/index",
+    "pages/login/index",
+    "pages/booking/index",
+    "pages/my-reservations/index",
+    "pages/my-collections/index",
+    "pages/collection-detail/index",
+    "pages/view-history/index",
+    "pages/feedback/index",
+    "pages/setting/index",
+    "pages/setting-phone/index",
+    "pages/setting-password/index",
+    "pages/setting-realname/index",
+    "pages/exhibition-list/index",
+    "pages/exhibition-detail/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "博物馆预约",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4169E1",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/nav/home.png",
+        "selectedIconPath": "images/nav/home-active.png"
+      },
+      {
+        "pagePath": "pages/exhibition-list/index",
+        "text": "展览",
+        "iconPath": "images/nav/favorite.png",
+        "selectedIconPath": "images/nav/favorite-active.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的",
+        "iconPath": "images/nav/user.png",
+        "selectedIconPath": "images/nav/user-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
+

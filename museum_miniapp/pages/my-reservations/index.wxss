@@ -1,0 +1,147 @@
+.container {
+  padding: 30rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+
+/* 预约列表样式 */
+.reservation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.reservation-item {
+  width: 100%;
+}
+
+.reservation-card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 20rpx;
+  position: relative;
+}
+
+.reservation-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20rpx;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 20rpx;
+  padding-right: 80rpx;
+}
+
+.reservation-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-tag {
+  font-size: 24rpx;
+  padding: 5rpx 0;
+  border-radius: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100rpx;
+  position: absolute;
+  right: 20rpx;
+  top: 20rpx;
+  height: 40rpx;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: 500;
+  z-index: 10;
+  overflow: visible;
+}
+
+.status-tag.active {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.status-tag.expired {
+  background-color: #f5f5f5;
+  color: #999;
+}
+
+.status-tag.canceled {
+  background-color: #fff1f0;
+  color: #ff4d4f;
+}
+
+.reservation-info {
+  margin-bottom: 30rpx;
+}
+
+.info-row {
+  display: flex;
+  font-size: 28rpx;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.label {
+  color: #666;
+  width: 180rpx;
+  flex-shrink: 0;
+}
+
+.value {
+  color: #333;
+  flex: 1;
+}
+
+.reservation-footer {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20rpx;
+  margin-top: 20rpx;
+}
+
+.cancel-btn {
+  background-color: #ffebee;
+  color: #ff4d4f;
+  font-size: 28rpx;
+  padding: 12rpx 40rpx;
+  border-radius: 40rpx;
+  border: none;
+  width: 90%;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 auto;
+  box-shadow: 0 2rpx 6rpx rgba(255, 77, 79, 0.3);
+}
+
+.cancel-btn::after {
+  border: none;
+}
+
+/* 加载更多和空状态 */
+.loading, .no-more, .empty {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 28rpx;
+} 

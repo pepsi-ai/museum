@@ -1,0 +1,104 @@
+<view class="container">
+  <view class="header">
+    <text class="title">预约参观</text>
+    <text class="subtitle">提前预约，便捷入馆</text>
+  </view>
+  
+  <!-- 预约确认视图 -->
+  <view class="confirm-view" wx:if="{{showConfirmView}}">
+    <view class="confirm-card">
+      <view class="confirm-header">
+        <text class="confirm-title">确认预约信息</text>
+      </view>
+      
+      <view class="confirm-info">
+        <view class="info-row">
+          <text class="label">展览名称：</text>
+          <text class="value">{{selectedItem.title}}</text>
+        </view>
+        <view class="info-row">
+          <text class="label">预约日期：</text>
+          <text class="value">{{selectedItem.date}}</text>
+        </view>
+        <view class="info-row">
+          <text class="label">预约时段：</text>
+          <text class="value">{{selectedItem.timeSlot}}</text>
+        </view>
+      </view>
+      
+      <view class="confirm-footer">
+        <button class="confirm-btn cancel" bindtap="cancelConfirm">取消</button>
+        <button class="confirm-btn submit" bindtap="submitConfirm">确认预约</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 预约列表 -->
+  <view class="reserve-list" wx:else>
+    <view class="reserve-item" 
+          wx:for="{{reserveList}}" 
+          wx:key="id">
+      <view class="reserve-card {{item.isExpired ? 'expired-card' : ''}}">
+        <!-- 状态标签 -->
+        <view class="status-tag {{item.isExpired ? 'expired' : (item.resdSum >= item.resSum ? 'full' : 'available')}}">
+          {{item.isExpired ? '已失效' : (item.resdSum >= item.resSum ? '已满' : '可预约')}}
+        </view>
+        
+        <view class="reserve-header">
+          <text class="reserve-title">{{item.title}}</text>
+        </view>
+        
+        <view class="reserve-info">
+          <view class="info-row">
+            <text class="label">预约类型：</text>
+            <text class="value">{{item.resTyp}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约日期：</text>
+            <text class="value">{{item.resDate}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约时间：</text>
+            <text class="value">{{item.resTime}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">场次信息：</text>
+            <text class="value">{{item.resSession}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">预约情况：</text>
+            <text class="value">已预约 {{item.resdSum || 0}} 人 / 总计 {{item.resSum}} 人</text>
+          </view>
+        </view>
+        
+        <view class="reserve-footer">
+          <button class="reserve-btn {{item.resdSum >= item.resSum && !item.isExpired ? 'disabled' : ''}}" 
+                  bindtap="onReserveTap" 
+                  data-id="{{item.id}}"
+                  disabled="{{item.isExpired || item.resdSum >= item.resSum}}">
+            {{item.isExpired ? '已失效' : (item.resdSum >= item.resSum ? '已满' : '立即预约')}}
+          </button>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 加载更多 -->
+    <view class="loading" wx:if="{{loading}}">加载中...</view>
+    <view class="no-more" wx:if="{{reserveList.length >= total && total > 0}}">没有更多了</view>
+    <view class="empty" wx:if="{{reserveList.length === 0 && !loading}}">
+      <text>暂无可预约项目</text>
+    </view>
+  </view>
+  
+  <!-- 隐私协议弹窗 -->
+  <privacy-modal show="{{showPrivacyModal}}" 
+                bind:agree="onPrivacyAgree"
+                bind:reject="onPrivacyReject" />
+                
+  <!-- 手机号授权弹窗 -->
+  <phone-auth-modal show="{{showPhoneModal}}"
+                   phone-number="{{phoneNumber}}"
+                   bind:confirm="onPhoneConfirm"
+                   bind:reject="onPhoneReject"
+                   bind:useOtherPhone="onUseOtherPhone" />
+</view> 

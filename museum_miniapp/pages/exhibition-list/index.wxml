@@ -1,0 +1,178 @@
+<view class="container">
+  <!-- 1. 导航栏设计 -->
+  <view class="header">
+    <view class="title">展览预约</view>
+    <view class="search-icon" bindtap="onSearchTap">
+      <image src="/images/icons/search.png" mode="aspectFit"></image>
+    </view>
+  </view>
+
+  <!-- 标签切换栏 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 'exhibition' ? 'active' : ''}}" 
+          bindtap="onTabChange" 
+          data-tab="exhibition">展览</view>
+    <view class="tab-item {{activeTab === 'collection' ? 'active' : ''}}" 
+          bindtap="onTabChange" 
+          data-tab="collection">藏品</view>
+  </view>
+
+  <!-- 展览标签内容 -->
+  <view wx:if="{{activeTab === 'exhibition'}}">
+    <!-- 4. 筛选功能 -->
+    <scroll-view class="filter-bar" scroll-x="true">
+      <view class="filter-group">
+        <view class="filter-item {{filter.status === 'all' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="status" 
+              data-value="all">全部展览</view>
+        <view class="filter-item {{filter.status === 'ongoing' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="status" 
+              data-value="ongoing">进行中</view>
+        <view class="filter-item {{filter.status === 'upcoming' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="status" 
+              data-value="upcoming">即将开始</view>
+        <view class="filter-item {{filter.status === 'ended' ? 'active' : ''}}" 
+              bindtap="onFilterTap" 
+              data-type="status" 
+              data-value="ended">已结束</view>
+      </view>
+    </scroll-view>
+
+    <!-- 2. 展览列表卡片 -->
+    <scroll-view class="exhibition-list" 
+                scroll-y="true" 
+                bindscrolltolower="onReachBottom"
+                refresher-enabled="{{true}}"
+                refresher-triggered="{{refreshing}}"
+                bindrefresherrefresh="onPullDownRefresh">
+      <block wx:if="{{exhibitions.length > 0}}">
+        <view class="exhibition-card" 
+              wx:for="{{exhibitions}}" 
+              wx:key="id" 
+              bindtap="onExhibitionTap" 
+              data-id="{{item.id}}">
+          <!-- 展览主图 -->
+          <image class="exhibition-image" 
+                src="{{baseUrl}}/file/getPic?name={{item.colPic}}" 
+                mode="aspectFill" 
+                binderror="onImageError" 
+                data-index="{{index}}"></image>
+          
+          <!-- 收藏按钮 -->
+          <view class="like-btn exhibition-like-btn" catchtap="onExhibitionLikeTap" data-id="{{item.id}}">
+            <image src="/images/love/{{likedExhibitions[item.id] ? 'love-active.png' : 'love.png'}}" class="like-icon"/>
+          </view>
+          
+          <!-- 展览信息 -->
+          <view class="exhibition-info">
+            <view class="exhibition-title">{{item.title}}</view>
+            
+            <!-- 展览时间 -->
+            <view class="exhibition-meta">
+              <image class="meta-icon" src="/images/icons/date.png"></image>
+              <text class="meta-text">{{item.startDate}} - {{item.endDate}}</text>
+            </view>
+            
+            <!-- 展览地点 -->
+            <view class="exhibition-meta">
+              <image class="meta-icon" src="/images/icons/location.png"></image>
+              <text class="meta-text">{{item.location || '临展馆1号厅'}}</text>
+            </view>
+            
+            <!-- 展览状态标签 -->
+            <view class="status-tag {{item.status}}">
+              {{item.status === 'upcoming' ? '即将开始' : item.status === 'ongoing' ? '进行中' : '已结束'}}
+            </view>
+            
+            <!-- 快速预约按钮 -->
+            <view class="reserve-btn {{item.status === 'ended' ? 'disabled' : ''}}" 
+                  catchtap="onReserveTap" 
+                  data-id="{{item.id}}">
+              {{item.status === 'ended' ? '已结束' : '预约'}}
+            </view>
+          </view>
+        </view>
+      </block>
+      
+      <!-- 6. 底部提示 -->
+      <view class="loading" wx:if="{{loading}}">加载中...</view>
+      <view class="no-more" wx:if="{{exhibitions.length >= total && total > 0}}">没有更多展览了</view>
+      <view class="empty" wx:if="{{exhibitions.length === 0 && !loading}}">
+        <text class="empty-icon-text">🔍</text>
+        <text class="empty-text">暂无展览信息</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 藏品标签内容 -->
+  <view wx:if="{{activeTab === 'collection'}}">
+    <!-- 分类列表 -->
+    <scroll-view class="category-list" scroll-x="true">
+      <view class="category-item {{item.name === currentCategory ? 'active' : ''}}"
+            wx:for="{{categories}}"
+            wx:key="id"
+            bindtap="onCategoryTap"
+            data-category="{{item.name}}">
+        {{item.name}}
+      </view>
+    </scroll-view>
+
+    <!-- 藏品列表 - 改用scroll-view -->
+    <scroll-view class="collection-list" 
+                scroll-y="true" 
+                bindscrolltolower="onReachBottom"
+                refresher-enabled="{{true}}"
+                refresher-triggered="{{refreshing}}"
+                bindrefresherrefresh="onPullDownRefresh">
+      <block wx:if="{{collectionList.length > 0}}">
+        <view class="collection-item"
+              wx:for="{{collectionList}}"
+              wx:key="id"
+              bindtap="onCollectionTap"
+              data-id="{{item.id}}">
+          <image src="{{baseUrl}}/file/getPic?name={{item.colPic}}" 
+                mode="aspectFill" 
+                class="collection-image"
+                binderror="onCollectionImageError" 
+                data-index="{{index}}"/>
+          <view class="collection-info">
+            <text class="collection-name">{{item.title}}</text>
+            <text class="collection-dynasty">{{item.dynasty}}</text>
+            <text class="collection-desc">{{formatDesc(item.desColl)}}</text>
+          </view>
+          <view class="like-btn" catchtap="onCollectionLikeTap" data-id="{{item.id}}">
+            <image src="/images/love/{{likedItems[item.id] ? 'love-active.png' : 'love.png'}}" class="like-icon"/>
+          </view>
+        </view>
+      </block>
+      
+      <!-- 底部提示 -->
+      <view class="loading" wx:if="{{collectionLoading}}">加载中...</view>
+      <view class="no-more" wx:if="{{collectionList.length >= collectionTotal && collectionTotal > 0}}">没有更多了</view>
+      <view class="empty" wx:if="{{collectionList.length === 0 && !collectionLoading}}">
+        <text class="empty-icon-text">🔍</text>
+        <text class="empty-text">暂无藏品</text>
+      </view>
+    </scroll-view>
+  </view>
+  
+  <!-- 返回顶部按钮 -->
+  <view class="back-to-top" bindtap="backToTop" wx:if="{{showBackToTop}}">
+    <image src="/images/icons/top.png"></image>
+  </view>
+  
+  <!-- 隐私协议弹窗 -->
+  <privacy-modal show="{{showPrivacyModal}}" 
+                bind:agree="onPrivacyAgree"
+                bind:reject="onPrivacyReject" />
+                
+  <!-- 手机号授权弹窗 -->
+  <phone-auth-modal show="{{showPhoneModal}}"
+                  phone-number="{{phoneNumber}}"
+                  bind:confirm="onPhoneConfirm"
+                  bind:reject="onPhoneReject"
+                  bind:useOtherPhone="onUseOtherPhone" />
+</view>

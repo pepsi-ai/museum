@@ -1,0 +1,227 @@
+.container {
+  padding: 30rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header {
+  margin-bottom: 30rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #666;
+  display: block;
+}
+
+/* 预约列表样式 */
+.reserve-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+.reserve-item {
+  width: 100%;
+}
+
+.reserve-card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 20rpx;
+  position: relative;
+}
+
+.reserve-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20rpx;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 20rpx;
+  padding-right: 80rpx;
+}
+
+.reserve-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-tag {
+  font-size: 24rpx;
+  padding: 5rpx 0;
+  border-radius: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100rpx;
+  position: absolute;
+  right: 20rpx;
+  top: 20rpx;
+  height: 40rpx;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: 500;
+  z-index: 10;
+  overflow: visible;
+}
+
+.status-tag.available {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.status-tag.full {
+  background-color: #fff1f0;
+  color: #ff4d4f;
+}
+
+.status-tag.expired {
+  background-color: #f5f5f5;
+  color: #999999;
+}
+
+.reserve-info {
+  margin-bottom: 30rpx;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.label {
+  color: #666;
+  width: 180rpx;
+  flex-shrink: 0;
+}
+
+.value {
+  color: #333;
+  flex: 1;
+}
+
+.reserve-footer {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #f0f0f0;
+  padding-top: 20rpx;
+}
+
+.reserve-btn {
+  background-color: #4169E1;
+  color: #fff;
+  font-size: 28rpx;
+  padding: 12rpx 40rpx;
+  border-radius: 40rpx;
+  border: none;
+  width: 90%;
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+.reserve-btn.disabled {
+  background-color: #ccc;
+  color: #fff;
+}
+
+/* 过期状态样式 */
+.expired-card {
+  opacity: 0.85;
+  background-color: #f9f9f9;
+}
+
+/* 已失效按钮特殊样式 */
+.expired-card .reserve-btn {
+  background-color: rgba(65, 105, 225, 0.4); /* 使用相同蓝色但透明度降低 */
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 加载更多和空状态 */
+.loading, .no-more, .empty {
+  text-align: center;
+  padding: 30rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 确认视图样式 */
+.confirm-view {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30rpx 0;
+}
+
+.confirm-card {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 40rpx 30rpx;
+  box-shadow: 0 2rpx 15rpx rgba(0, 0, 0, 0.1);
+}
+
+.confirm-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.confirm-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.confirm-info {
+  margin-bottom: 40rpx;
+}
+
+.confirm-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20rpx;
+  margin-top: 50rpx;
+}
+
+.confirm-btn {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 40rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30rpx;
+  font-weight: 500;
+}
+
+.confirm-btn.cancel {
+  background-color: #f5f5f5;
+  color: #666;
+  border: 1px solid #ddd;
+}
+
+.confirm-btn.submit {
+  background-color: #4169E1;
+  color: #fff;
+} 

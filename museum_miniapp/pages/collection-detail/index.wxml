@@ -1,0 +1,151 @@
+<view class="container">
+  <!-- 藏品图片展示区 -->
+  <view class="collection-image-container">
+    <!-- 从后端获取图片，且没有错误 -->
+    <block wx:if="{{collectionDetail.colPic && collectionDetail.colPic.indexOf('/') !== 0 && !hasError}}">
+      <image 
+        src="{{baseUrl}}/file/getPic?name={{collectionDetail.colPic}}" 
+        mode="aspectFit" 
+        class="collection-image"
+        binderror="onImageError"/>
+    </block>
+    
+    <!-- 本地图片或加载失败时 -->
+    <block wx:elif="{{collectionDetail.colPic && collectionDetail.colPic.indexOf('/') === 0 && !hasError}}">
+      <image 
+        src="{{collectionDetail.colPic}}"
+        mode="aspectFit" 
+        class="collection-image"/>
+    </block>
+    
+    <!-- 错误状态 -->
+    <block wx:else>
+      <view class="error-container">
+        <icon type="warn" size="40" color="#999"></icon>
+        <text class="error-text">暂时无法获取藏品信息</text>
+      </view>
+    </block>
+    
+    <!-- 收藏按钮，仅在没有错误时显示 -->
+    <view class="like-btn" catchtap="onLikeTap" data-id="{{collectionDetail.id}}" wx:if="{{!hasError}}">
+      <image src="/images/love/{{isLiked ? 'love-active.png' : 'love.png'}}" class="like-icon"/>
+    </view>
+  </view>
+
+  <!-- 藏品基本信息区域，仅在没有错误时显示 -->
+  <view class="collection-info-section" wx:if="{{!hasError}}">
+    <view class="collection-title">{{collectionDetail.title}}</view>
+    
+    <view class="info-tabs">
+      <view class="tab-item {{currentTab === 'intro' ? 'active' : ''}}" 
+            bindtap="switchTab" 
+            data-tab="intro">藏品简述</view>
+      <view class="tab-item {{currentTab === 'history' ? 'active' : ''}}" 
+            bindtap="switchTab" 
+            data-tab="history">历史背景</view>
+    </view>
+  </view>
+
+  <!-- 主要内容区域，仅在没有错误时显示 -->
+  <scroll-view scroll-y="true" class="content-scroll" bindscroll="onScroll" style="height: calc(100vh - 120rpx - {{isFixed ? 120 : 0}}rpx);" wx:if="{{!hasError}}">
+    <!-- 藏品简述 -->
+    <view class="content-section" wx:if="{{currentTab === 'intro'}}">
+      <view class="section-block">
+        <view class="block-title">基本信息</view>
+        <view class="block-content">
+          <view class="info-item">
+            <text class="info-label">朝代：</text>
+            <text class="info-value">{{collectionDetail.origin  || '未知'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">分类：</text>
+            <text class="info-value">{{collectionDetail.cateId || '未知'}}</text>
+          </view>
+          <view class="info-item">
+            <text class="info-label">展厅：</text>
+            <text class="info-value">{{collectionDetail.displayRoom || '未知'}}</text>
+          </view>
+        </view>
+      </view>
+      
+      <view class="section-block">
+        <view class="block-title">藏品描述</view>
+        <view class="block-content">
+          <rich-text nodes="{{collectionDetail.desColl}}"></rich-text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 历史背景 -->
+    <view class="content-section" wx:if="{{currentTab === 'history'}}">
+      <view class="section-block">
+        <view class="block-title">历史背景</view>
+        <view class="block-content history-content">
+          <rich-text nodes="{{collectionDetail.historyBackground || '暂无历史背景信息'}}"></rich-text>
+          
+          <!-- 如果没有专门的历史背景字段，可以用描述代替 -->
+          <view wx:if="{{!collectionDetail.historyBackground && collectionDetail.desColl}}">
+            <rich-text nodes="{{collectionDetail.desColl}}"></rich-text>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 用户评论区域 -->
+    <view class="section-block comment-section">
+      <view class="block-title">用户评论</view>
+      <view class="block-content">
+        <view class="comment-list">
+          <view class="comment-item" wx:for="{{comments}}" wx:key="id">
+            <view class="comment-header">
+              <image class="comment-avatar" src="{{item.avatarUrl || '/images/mine/head.png'}}"></image>
+              <view class="comment-user-info">
+                <text class="comment-nickname">{{item.userName || '博物馆游客'}}</text>
+                <text class="comment-time">{{item.fedDateTime}}</text>
+              </view>
+            </view>
+            <view class="comment-content">{{item.feedContent}}</view>
+            <view class="comment-actions">
+              <!-- 添加删除按钮，仅当当前用户ID与评论用户ID匹配时显示 -->
+              <view class="delete-action" bindtap="onCommentDeleteTap" data-id="{{item.id}}" 
+                    wx:if="{{userInfo && userInfo.id && String(userInfo.id) === String(item.userId)}}">
+                <image class="delete-icon" src="/images/icons/delete.png"></image>
+              </view>
+              <view class="like-action" bindtap="onCommentLikeTap" data-id="{{item.id}}">
+                <image class="like-icon" src="/images/icons/{{item.isLiked ? 'like-active.png' : 'like.png'}}"></image>
+                <text class="like-count">{{item.likeCount || 0}}</text>
+              </view>
+            </view>
+          </view>
+          
+          <view class="no-comment" wx:if="{{comments.length === 0}}">
+            <text>暂无评论</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+  
+  <!-- 评论输入框 -->
+  <view class="comment-input-container">
+    <input class="comment-input" placeholder="写下你的评论..." value="{{commentText}}" bindinput="onCommentInput" />
+    <button class="send-btn" bindtap="onCommentSubmit">发送</button>
+  </view>
+  
+  <!-- 错误状态下的底部按钮，提供重试功能 -->
+  <view class="footer fixed" wx:if="{{hasError}}">
+    <button class="retry-btn" bindtap="getCollectionDetail">重新加载</button>
+  </view>
+  
+  <!-- 隐私协议弹窗 -->
+  <privacy-modal show="{{showPrivacyModal}}" 
+                bind:agree="onPrivacyAgree"
+                bind:reject="onPrivacyReject" />
+                
+  <!-- 手机号授权弹窗 -->
+  <phone-auth-modal show="{{showPhoneModal}}"
+                   phone-number="{{phoneNumber}}"
+                   bind:confirm="onPhoneConfirm"
+                   bind:reject="onPhoneReject"
+                   bind:useOtherPhone="onUseOtherPhone" />
+</view> 

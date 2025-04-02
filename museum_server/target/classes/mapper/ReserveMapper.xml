@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.museum.mapper.ReserveMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.museum.damain.po.MsReserve">
+        <id column="id" property="id" />
+        <result column="exhibition_id" property="exhibitionId" />
+        <result column="title" property="title" />
+        <result column="res_typ" property="resTyp" />
+        <result column="cate_id" property="cateId" />
+        <result column="cate_name" property="cateName" />
+        <result column="res_sum" property="resSum" />
+        <result column="res_date" property="resDate" />
+        <result column="res_time" property="resTime" />
+        <result column="res_session" property="resSession" />
+        <result column="res_des" property="resDes" />
+        <result column="resd_sum" property="resdSum" />
+        <result column="crt_tm" property="crtTm" />
+        <result column="status" property="status" />
+        <result column="has_multiple_times" property="hasMultipleTimes" />
+        <result column="group_id" property="groupId" />
+    </resultMap>
+
+    <!-- 根据GroupId查询预约 -->
+    <select id="selectByGroupId" resultMap="BaseResultMap">
+        SELECT * FROM ms_reserve
+        WHERE group_id = #{groupId}
+        ORDER BY id ASC
+    </select>
+
+    <!-- 根据标题模糊查询预约 -->
+    <select id="selectByTitle" resultMap="BaseResultMap">
+        SELECT * FROM ms_reserve
+        WHERE title LIKE CONCAT('%', #{title}, '%')
+        ORDER BY id DESC
+    </select>
+
+    <!-- 根据展览ID查询预约 -->
+    <select id="selectByExhibitionId" resultMap="BaseResultMap">
+        SELECT * FROM ms_reserve
+        WHERE exhibition_id = #{exhibitionId}
+        ORDER BY id DESC
+    </select>
+
+</mapper> 

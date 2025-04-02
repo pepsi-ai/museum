@@ -1,0 +1,16 @@
+{
+  "navigationBarTitleText": "展览预约",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f7f7f7",
+  "usingComponents": {
+    "privacy-modal": "/components/privacy-modal/index",
+    "phone-auth-modal": "/components/phone-auth-modal/index"
+  }
+}
+
+
+
+
+
+
+

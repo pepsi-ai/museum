@@ -1,0 +1,208 @@
+<!-- 展览详情页 -->
+<view class="container">
+  <!-- 加载中状态 -->
+  <view class="loading-container" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+    <view class="loading-text">加载展览信息中...</view>
+  </view>
+
+  <!-- 主要内容区域 -->
+  <block wx:else>
+    <!-- 顶部展览信息区 -->
+    <view class="header-section {{isHeaderFixed ? 'fixed' : ''}}">
+      <!-- 展览大图 -->
+      <image class="exhibition-banner" src="{{baseUrl}}/file/getPic?name={{exhibition.colPic}}" mode="aspectFill"></image>
+      
+      <!-- 展览基本信息 -->
+      <view class="exhibition-info">
+        <!-- 展览标题 -->
+        <view class="exhibition-title">{{exhibition.title}}</view>
+        
+        <!-- 展览时间 -->
+        <view class="exhibition-meta">
+          <image class="meta-icon" src="/images/icons/date.png"></image> 
+          <text class="meta-text">{{exhibition.startDate}} - {{exhibition.endDate}}</text>
+        </view>
+        
+        <!-- 展览地点 -->
+        <view class="exhibition-meta">
+          <image class="meta-icon" src="/images/icons/location.png"></image> 
+          <text class="meta-text">{{exhibition.location || '临展馆1号厅'}}</text>
+        </view>
+        
+        <!-- 展览状态标签 -->
+        <view class="status-tag {{exhibition.status}}">
+          {{exhibition.status === 'upcoming' ? '即将开始' : exhibition.status === 'ongoing' ? '进行中' : '已结束'}}
+        </view>
+      </view>
+      
+      <!-- 展览简介 -->
+      <view class="exhibition-intro">
+        <view class="section-title">展览简介</view>
+        <view class="intro-content {{isIntroFolded ? 'folded' : ''}}">{{exhibition.intro || '暂无简介'}}</view>
+        <view class="fold-btn" bindtap="toggleIntro" wx:if="{{exhibition.intro && exhibition.intro.length > 100}}">
+          {{isIntroFolded ? '展开' : '收起'}}
+          <!-- 使用文字替代图标 -->
+          <text class="fold-icon-text">{{isIntroFolded ? '▼' : '▲'}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 时间段选择区 -->
+    <view class="time-section">
+      <view class="section-title">选择预约时间</view>
+      
+      <!-- 日期选择 -->
+      <scroll-view class="date-scroll" scroll-x="true">
+        <view 
+          class="date-item {{currentDate === item.date ? 'active' : ''}} {{item.isPast ? 'disabled' : ''}}"
+          wx:for="{{dateList}}"
+          wx:key="date"
+          bindtap="onDateSelect"
+          data-date="{{item.date}}"
+          data-index="{{index}}">
+          <view class="date-day">{{item.day}}</view>
+          <view class="date-week">{{item.week}}</view>
+        </view>
+      </scroll-view>
+      
+      <!-- 时间段加载状态 -->
+      <view class="time-slots-loading" wx:if="{{timeSlotsLoading}}">
+        <view class="loading-spinner-small"></view>
+        <text class="loading-text-small">加载时间段...</text>
+      </view>
+      
+      <!-- 时间段选择 -->
+      <scroll-view class="time-scroll" scroll-x="true" wx:else>
+        <view 
+          class="time-item {{currentTimeSlot === index ? 'active' : ''}} {{item.isFull || item.isPast ? 'disabled' : ''}}"
+          wx:for="{{timeSlots}}"
+          wx:key="index"
+          bindtap="onTimeSelect"
+          data-index="{{index}}">
+          <view class="time-range">{{item.startTime}}-{{item.endTime}}</view>
+          <view class="available-slots">
+            <block wx:if="{{item.isFull}}">已满</block>
+            <block wx:elif="{{item.isPast}}">已过期</block>
+            <block wx:else>剩余{{item.availableSlots}}个名额</block>
+          </view>
+        </view>
+      </scroll-view>
+      
+      <!-- 预约按钮 - 移动到时间段选择下方 -->
+      <view class="reserve-btn-container">
+        <button 
+          class="reserve-btn-inline {{canReserve ? '' : 'disabled'}} {{exhibition.status === 'ended' ? 'ended' : ''}}" 
+          bindtap="onReserveTap" 
+          disabled="{{!canReserve || exhibition.status === 'ended'}}">
+          <block wx:if="{{exhibition.status === 'ended'}}">
+            展览已结束
+          </block>
+          <block wx:elif="{{!selectedTimeSlot}}">
+            请选择预约时间
+          </block>
+          <block wx:elif="{{selectedTimeSlot.isFull}}">
+            该时段已约满
+          </block>
+          <block wx:else>
+            立即预约
+          </block>
+        </button>
+      </view>
+    </view>
+
+    <!-- 藏品列表区 -->
+    <view class="collections-section">
+      <view class="section-title">相关藏品</view>
+      
+      <!-- 藏品网格 -->
+      <view class="collections-grid">
+        <view 
+          class="collection-item"
+          wx:for="{{collections}}"
+          wx:key="id"
+          bindtap="onCollectionTap"
+          data-id="{{item.id}}">
+          <!-- 图片显示，增加更多容错处理 -->
+          <block wx:if="{{item.picturePath && item.picturePath.indexOf('http') === 0}}">
+            <image class="collection-image" src="{{item.picturePath}}" mode="aspectFill"></image>
+          </block>
+          <block wx:elif="{{item.picturePath}}">
+            <image class="collection-image" src="{{baseUrl}}/file/getPic?name={{item.picturePath}}" mode="aspectFill"></image>
+          </block>
+          <block wx:elif="{{item.colPic}}">
+            <image class="collection-image" src="{{baseUrl}}/file/getPic?name={{item.colPic}}" mode="aspectFill"></image>
+          </block>
+          <block wx:else>
+            <view class="collection-image no-image">暂无图片</view>
+          </block>
+          
+          <view class="collection-info">
+            <view class="collection-name">{{item.name || item.title}}</view>
+            <view class="collection-dynasty">{{item.dynasty || item.origin || '未知年代'}}</view>
+            <view class="collection-desc" wx:if="{{item.description || item.desColl}}">{{item.description || item.desColl}}</view>
+          </view>
+        </view>
+      </view>
+      
+      <!-- 藏品加载提示 - 修改条件逻辑 -->
+      <view class="loading" wx:if="{{collectionsLoading}}">加载中...</view>
+      <view class="no-more" wx:if="{{!collectionsLoading && collections.length > 0 && !hasMoreCollections}}">没有更多藏品了</view>
+      <view class="empty" wx:if="{{!collectionsLoading && collections.length === 0}}">
+        <!-- 使用文本替代图标 -->
+        <text class="empty-icon-text">🔍</text>
+        <text class="empty-text">暂无相关藏品</text>
+      </view>
+    </view>
+
+    <!-- 用户评论区域 -->
+    <view class="comment-section">
+      <view class="section-title">用户评论</view>
+      <view class="comment-list">
+        <view class="comment-item" wx:for="{{comments}}" wx:key="id">
+          <view class="comment-header">
+            <image class="comment-avatar" src="{{item.avatarUrl || '/images/mine/head.png'}}"></image>
+            <view class="comment-user-info">
+              <text class="comment-nickname">{{item.userName || '博物馆游客'}}</text>
+              <text class="comment-time">{{item.fedDateTime}}</text>
+            </view>
+          </view>
+          <view class="comment-content">{{item.feedContent}}</view>
+          <view class="comment-actions">
+            <!-- 添加删除按钮，仅当当前用户ID与评论用户ID匹配时显示 -->
+            <view class="delete-action" bindtap="onCommentDeleteTap" data-id="{{item.id}}" 
+                  wx:if="{{userInfo && userInfo.id && String(userInfo.id) === String(item.userId)}}">
+              <image class="delete-icon" src="/images/icons/delete.png"></image>
+            </view>
+            <view class="like-action" bindtap="onCommentLikeTap" data-id="{{item.id}}">
+              <image class="like-icon" src="/images/icons/{{item.isLiked ? 'like-active.png' : 'like.png'}}"></image>
+              <text class="like-count">{{item.likeCount || 0}}</text>
+            </view>
+          </view>
+        </view>
+        
+        <view class="no-comment" wx:if="{{comments.length === 0}}">
+          <text>暂无评论</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+
+<!-- 评论输入框 -->
+<view class="comment-input-container">
+  <input class="comment-input" placeholder="写下你的评论..." value="{{commentText}}" bindinput="onCommentInput" />
+  <button class="send-btn" bindtap="onCommentSubmit">发送</button>
+</view>
+
+<!-- 隐私协议弹窗 -->
+<privacy-modal show="{{showPrivacyModal}}" 
+              bind:agree="onPrivacyAgree"
+              bind:reject="onPrivacyReject" />
+              
+<!-- 手机号授权弹窗 -->
+<phone-auth-modal show="{{showPhoneModal}}"
+                phone-number="{{phoneNumber}}"
+                bind:confirm="onPhoneConfirm"
+                bind:reject="onPhoneReject"
+                bind:useOtherPhone="onUseOtherPhone" /> 

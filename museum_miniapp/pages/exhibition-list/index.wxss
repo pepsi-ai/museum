@@ -1,0 +1,387 @@
+/* 容器样式 */
+.container {
+  min-height: 100vh;
+  background-color: #f7f7f7;
+  padding: 0;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* 1. 导航栏样式 */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80rpx;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  z-index: 100;
+}
+
+.title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.search-icon {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-icon image {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+/* 标签切换栏样式 */
+.tab-bar {
+  position: fixed;
+  top: 80rpx;
+  left: 0;
+  right: 0;
+  display: flex;
+  background-color: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  z-index: 99;
+  height: 80rpx;
+}
+
+.tab-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 30rpx;
+  color: #666;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tab-item.active {
+  color: #4169E1;
+  font-weight: 500;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 6rpx;
+  background-color: #4169E1;
+  border-radius: 3rpx;
+}
+
+/* 4. 筛选功能样式 */
+.filter-bar {
+  position: fixed;
+  top: 160rpx;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  white-space: nowrap;
+  padding: 15rpx 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  z-index: 98;
+  height: 80rpx;
+}
+
+.filter-group {
+  display: inline-flex;
+  height: 100%;
+  align-items: center;
+}
+
+.filter-item {
+  display: inline-block;
+  padding: 10rpx 28rpx;
+  margin-right: 16rpx;
+  font-size: 28rpx;
+  color: #666;
+  background-color: #f5f5f5;
+  border-radius: 30rpx;
+  transition: all 0.3s;
+  line-height: 40rpx;
+}
+
+.filter-item.active {
+  background-color: #4169E1;
+  color: #fff;
+}
+
+/* 2. 展览列表样式 */
+.exhibition-list {
+  margin-top: 240rpx;
+  padding: 15rpx 20rpx;
+  height: calc(100vh - 240rpx);
+  box-sizing: border-box;
+}
+
+.exhibition-card {
+  margin-bottom: 20rpx;
+  background-color: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.06);
+  position: relative;
+}
+
+.exhibition-image {
+  width: 100%;
+  height: 320rpx;
+}
+
+.exhibition-info {
+  padding: 20rpx;
+  position: relative;
+}
+
+.exhibition-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+  padding-right: 120rpx;
+}
+
+.exhibition-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+.meta-icon {
+  width: 42rpx;
+  height: 42rpx;
+  margin-right: 12rpx;
+}
+
+.meta-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 状态标签样式 */
+.status-tag {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.status-tag.upcoming {
+  background-color: #e6f0ff;
+  color: #4169E1;
+  border: 1rpx solid #b3d1ff;
+}
+
+.status-tag.ongoing {
+  background-color: #e6f7ee;
+  color: #09BB07;
+  border: 1rpx solid #a7e2c3;
+}
+
+.status-tag.ended {
+  background-color: #f8f8f8;
+  color: #999;
+  border: 1rpx solid #ddd;
+}
+
+/* 收藏按钮样式 (展览卡片) */
+.exhibition-like-btn {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.like-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* 3. 快速预约按钮样式 */
+.reserve-btn {
+  position: absolute;
+  bottom: 20rpx;
+  right: 20rpx;
+  background-color: #4169E1;
+  color: #fff;
+  padding: 10rpx 36rpx;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+}
+
+.reserve-btn.disabled {
+  background-color: #ddd;
+  color: #999;
+}
+
+/* 分类列表样式 */
+.category-list {
+  position: fixed;
+  top: 160rpx;
+  left: 0;
+  right: 0;
+  z-index: 98;
+  background-color: #fff;
+  white-space: nowrap;
+  padding: 15rpx 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  height: 80rpx;
+}
+
+.category-item {
+  display: inline-block;
+  margin-right: 20rpx;
+  padding: 10rpx 24rpx;
+  font-size: 28rpx;
+  color: #666;
+  border-radius: 30rpx;
+  line-height: 40rpx;
+}
+
+.category-item.active {
+  color: #fff;
+  background-color: #4169E1;
+}
+
+/* 藏品列表样式 - 改用scroll-view */
+.collection-list {
+  margin-top: 240rpx;
+  padding: 15rpx 20rpx;
+  height: calc(100vh - 240rpx);
+  box-sizing: border-box;
+}
+
+.collection-item {
+  display: flex;
+  background-color: #fff;
+  border-radius: 12rpx;
+  margin-bottom: 16rpx;
+  padding: 16rpx;
+  position: relative;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+
+.collection-image {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 8rpx;
+  margin-right: 16rpx;
+}
+
+.collection-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+.collection-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.collection-dynasty {
+  font-size: 24rpx;
+  color: #4169E1;
+  margin-bottom: 8rpx;
+}
+
+.collection-desc {
+  font-size: 24rpx;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.like-btn {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  width: 70rpx;
+  height: 70rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.like-icon {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* 6. 底部提示样式 */
+.loading, .no-more, .empty {
+  padding: 20rpx 0;
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.empty {
+  padding: 80rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-icon-text {
+  font-size: 60rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 返回顶部按钮 */
+.back-to-top {
+  position: fixed;
+  bottom: 60rpx;
+  right: 30rpx;
+  width: 90rpx;
+  height: 90rpx;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 90;
+}
+
+.back-to-top image {
+  width: 48rpx;
+  height: 48rpx;
+}

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "我的预约",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f5f5f5",
+  "usingComponents": {
+    "privacy-modal": "/components/privacy-modal/index",
+    "phone-auth-modal": "/components/phone-auth-modal/index"
+  }
+} 

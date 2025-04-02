@@ -1,0 +1,153 @@
+<view class="container" style="width: 730rpx; display: block; box-sizing: border-box">
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <icon type="search" size="14"></icon>
+    <input type="text" 
+           placeholder="搜索博物馆和展览" 
+           placeholder-class="search-placeholder"
+           value="{{searchKeyword}}"
+           bindinput="onSearchInput"
+           bindconfirm="onSearchConfirm"/>
+  </view>
+
+  <!-- 轮播图 -->
+  <swiper class="banner" 
+          indicator-dots="{{bannerList.length > 0}}" 
+          autoplay="{{bannerList.length > 0}}" 
+          interval="3000" 
+          duration="500"
+          circular="true"
+          indicator-color="rgba(255, 255, 255, 0.6)"
+          indicator-active-color="#ffffff"
+          wx:if="{{bannerList.length > 0}}">
+    <swiper-item wx:for="{{bannerList}}" 
+                 wx:key="id" 
+                 bindtap="onExhibitionTap" 
+                 data-id="{{item.id}}">
+      <!-- 判断图片路径是否为本地路径 -->
+      <image wx:if="{{item.colPic && item.colPic.indexOf('/') === 0}}"
+             src="{{item.colPic}}" 
+             mode="aspectFill"
+             class="banner-image"/>
+      <!-- 远程图片 -->
+      <image wx:else
+             src="{{baseUrl}}/file/getPic?name={{item.colPic}}" 
+             mode="aspectFill"
+             class="banner-image"
+             binderror="onBannerImageError"
+             data-index="{{index}}"/>
+      <view class="banner-info">
+        <view class="banner-title">{{item.title}}</view>
+        <view class="banner-meta" wx:if="{{item.startDate && item.endDate}}">
+          <image class="banner-icon" src="/images/icons/date.png" mode="aspectFit"></image>
+          <text class="banner-label">日期：</text>
+          <text>{{item.startDate}} - {{item.endDate}}</text>
+        </view>
+        <view class="banner-tag" wx:if="{{item.status}}">
+          {{item.status === 'upcoming' ? '即将开始' : item.status === 'ongoing' ? '进行中' : '已结束'}}
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+  
+  <!-- 轮播图为空时显示占位 -->
+  <view class="empty-banner" wx:if="{{bannerList.length === 0}}">
+    <text>加载轮播图...</text>
+  </view>
+
+  <!-- 在线预约参观 -->
+  <view class="booking-card" bindtap="onBookingTap">
+    <view class="booking-info">
+      <text class="booking-title">在线预约参观</text>
+      <text class="booking-desc">提前预约，便捷入馆</text>
+    </view>
+    <button class="booking-btn" bindtap="onBookingBtnTap" data-id="0" style="position: relative; left: 59rpx; top: -1rpx">立即预约</button>
+  </view>
+
+  <!-- 展览推荐 -->
+  <view class="exhibition-section">
+    <view class="section-header">
+      <text class="section-title">展览推荐</text>
+      <view class="more" bindtap="onMoreExhibition">
+        <text>更多</text>
+        <text class="more-icon">></text>
+      </view>
+    </view>
+    
+    <!-- 展览列表 -->
+    <view class="exhibition-list" wx:if="{{exhibitionList.length > 0}}" style="width: 730rpx; display: flex; flex-direction: column; box-sizing: border-box; position: relative; left: -52rpx; top: -14rpx">
+      <view class="exhibition-item" 
+            wx:for="{{exhibitionList}}" 
+            wx:key="id"
+            bindtap="onExhibitionTap"
+            data-id="{{item.id}}">
+        <!-- 展览图片部分 -->
+        <view class="image-container">
+          <!-- 判断图片路径是否为本地路径 -->
+          <image wx:if="{{item.colPic && item.colPic.indexOf('/') === 0}}"
+                 src="{{item.colPic}}" 
+                 mode="aspectFill"/>
+          <!-- 远程图片 -->
+          <image wx:else
+                 src="{{baseUrl}}/file/getPic?name={{item.colPic}}" 
+                 mode="aspectFill"
+                 binderror="onExhibitionImageError"
+                 data-index="{{index}}"/>
+          
+          <!-- 短日期显示在图片上 -->
+          <text class="exhibition-short-date">{{item.startDate.split('.')[1]}}.{{item.startDate.split('.')[2]}}-{{item.endDate.split('.')[1]}}.{{item.endDate.split('.')[2]}}</text>
+          
+          <!-- 状态标签 -->
+          <view class="status-tag-inline {{item.status}}">
+            {{item.status === 'upcoming' ? '即将开始' : item.status === 'ongoing' ? '进行中' : '已结束'}}
+          </view>
+        </view>
+        
+        <view class="exhibition-info">
+          <view class="exhibition-title">{{item.title}}</view>
+          
+          <!-- 展览时间 -->
+          <view class="exhibition-meta">
+            <image class="meta-icon" src="/images/icons/date.png" mode="aspectFit"></image>
+            <text class="meta-text">{{item.startDate}} - {{item.endDate}}</text>
+          </view>
+          
+          <!-- 展览地点 -->
+          <view class="exhibition-meta" wx:if="{{item.location}}">
+            <image class="meta-icon" src="/images/icons/location.png" mode="aspectFit"></image>
+            <text class="meta-text">{{item.location}}</text>
+          </view>
+          
+          <!-- 预约按钮 -->
+          <view class="detail-button" catchtap="onViewDetail" data-id="{{item.id}}">
+            预约
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 加载中状态 -->
+    <view class="loading-exhibition" wx:elif="{{loading}}">
+      <text>正在加载展览信息...</text>
+    </view>
+    
+    <!-- 空数据状态 -->
+    <view class="empty-exhibition" wx:else>
+      <text>暂无展览信息</text>
+    </view>
+  </view>
+
+  <!-- 隐私协议弹窗 -->
+  <privacy-modal show="{{showPrivacyModal}}" 
+                bind:agree="onPrivacyAgree"
+                bind:reject="onPrivacyReject" />
+                
+  <!-- 手机号授权弹窗 -->
+  <phone-auth-modal show="{{showPhoneModal}}"
+                   phone-number="{{phoneNumber}}"
+                   bind:confirm="onPhoneConfirm"
+                   bind:reject="onPhoneReject"
+                   bind:useOtherPhone="onUseOtherPhone" />
+</view>
+
+

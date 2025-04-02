@@ -1,0 +1,76 @@
+<view class="container">
+
+  <!-- 标签切换栏 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 'exhibition' ? 'active' : ''}}" 
+          bindtap="onTabChange" 
+          data-tab="exhibition">展览收藏</view>
+    <view class="tab-item {{activeTab === 'collection' ? 'active' : ''}}" 
+          bindtap="onTabChange" 
+          data-tab="collection">藏品收藏</view>
+  </view>
+  
+  <!-- 展览收藏列表 -->
+  <view class="collection-list" wx:if="{{activeTab === 'exhibition'}}">
+    <view class="collection-item" 
+          wx:for="{{exhibitionList}}" 
+          wx:key="id"
+          bindtap="onExhibitionTap"
+          data-id="{{item.id}}">
+      <image src="{{baseUrl}}/file/getPic?name={{item.colPic}}" 
+             mode="aspectFill" 
+             class="collection-image"></image>
+      <view class="collection-info">
+        <view class="collection-header">
+          <text class="collection-title">{{item.title}}</text>
+          <view class="like-btn active" catchtap="onUnlikeTap" data-id="{{item.id}}" data-type="exhibition">
+            <image src="/images/love/love-active.png" class="like-icon"></image>
+          </view>
+        </view>
+        <text class="collection-date">{{item.crtTm}}</text>
+        <text class="collection-desc">{{item.desColl}}</text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 藏品收藏列表 -->
+  <view class="collection-list grid-layout" wx:if="{{activeTab === 'collection'}}">
+    <view class="collection-item-grid" 
+          wx:for="{{collectionList}}" 
+          wx:key="id"
+          bindtap="onCollectionTap"
+          data-id="{{item.id}}">
+      <image src="{{baseUrl}}/file/getPic?name={{item.colPic}}" 
+             mode="aspectFill" 
+             class="collection-image-grid"></image>
+      <view class="collection-info-grid">
+        <view class="collection-header">
+          <text class="collection-title-grid">{{item.title}}</text>
+        </view>
+        <text class="collection-origin">朝代：{{item.origin || '未知'}}</text>
+        <view class="like-btn-grid active" catchtap="onUnlikeTap" data-id="{{item.id}}" data-type="collection">
+          <image src="/images/love/love-active.png" class="like-icon"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 加载更多 -->
+  <view class="loading" wx:if="{{loading}}">加载中...</view>
+  <view class="no-more" wx:if="{{(activeTab === 'exhibition' ? exhibitionList.length >= exhibitionTotal : collectionList.length >= collectionTotal) && (activeTab === 'exhibition' ? exhibitionTotal > 0 : collectionTotal > 0)}}">没有更多了</view>
+  <view class="empty" wx:if="{{(activeTab === 'exhibition' ? exhibitionList.length === 0 : collectionList.length === 0) && !loading}}">
+    <text>暂无收藏</text>
+  </view>
+  
+  <!-- 隐私协议弹窗 -->
+  <privacy-modal show="{{showPrivacyModal}}" 
+                bind:agree="onPrivacyAgree"
+                bind:reject="onPrivacyReject" />
+                
+  <!-- 手机号授权弹窗 -->
+  <phone-auth-modal show="{{showPhoneModal}}"
+                   phone-number="{{phoneNumber}}"
+                   bind:confirm="onPhoneConfirm"
+                   bind:reject="onPhoneReject"
+                   bind:useOtherPhone="onUseOtherPhone" />
+</view> 

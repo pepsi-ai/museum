@@ -1,0 +1,136 @@
+.login-container {
+  min-height: 100vh;
+  padding: 0 60rpx;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Logo区域 */
+.logo-area {
+  margin-top: 160rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+}
+
+.brand-name {
+  margin-top: 30rpx;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+/* 登录表单 */
+.login-form {
+  margin-top: 80rpx;
+}
+
+.input-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100rpx;
+  margin-bottom: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.input-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.eye-icon {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  right: 0;
+}
+
+input {
+  flex: 1;
+  height: 100%;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.placeholder {
+  color: #999;
+}
+
+.verify-code {
+  font-size: 32rpx;
+  color: #666;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+}
+
+/* 记住登录行 */
+.remember-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40rpx 0;
+}
+
+.checkbox-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 12rpx;
+}
+
+.checkbox-wrap text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+.forget-pwd {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 登录按钮 */
+.login-btn {
+  width: 100%;
+  height: 90rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1989fa;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 45rpx;
+  margin-top: 60rpx;
+}
+
+.login-btn:active {
+  opacity: 0.8;
+}
+
+/* 底部协议 */
+.agreement {
+  margin-top: auto;
+  margin-bottom: 60rpx;
+  text-align: center;
+  font-size: 24rpx;
+}
+
+.agreement-text {
+  color: #999;
+}
+
+.agreement-link {
+  color: #1989fa;
+} 

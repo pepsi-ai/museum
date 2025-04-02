@@ -1,0 +1,96 @@
+<view class="container">
+  <view class="header">
+    <text class="title">设置</text>
+  </view>
+  
+  <!-- 账号安全 -->
+  <view class="section-title">账号安全</view>
+  <view class="setting-list">
+    <view class="setting-item" bindtap="navigateTo" data-url="/pages/setting-phone/index">
+      <text class="item-name">手机号码</text>
+      <view class="item-right">
+        <text class="item-value">{{phone || '未绑定'}}</text>
+        <text class="item-arrow">></text>
+      </view>
+    </view>
+    
+    <view class="setting-item" bindtap="navigateTo" data-url="/pages/setting-password/index">
+      <text class="item-name">修改登录密码</text>
+      <view class="item-right">
+        <text class="item-arrow">></text>
+      </view>
+    </view>
+    
+    <view class="setting-item" bindtap="navigateTo" data-url="/pages/setting-realname/index">
+      <text class="item-name">实名认证</text>
+      <view class="item-right">
+        <text class="item-value">{{isVerified ? '已认证' : '未认证'}}</text>
+        <text class="item-arrow">></text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 通用设置 -->
+  <view class="section-title">通用设置</view>
+  <view class="setting-list">
+    <view class="setting-item">
+      <text class="item-name">消息通知</text>
+      <view class="item-right">
+        <switch checked="{{notificationEnabled}}" color="#4169E1" bindchange="toggleNotification"></switch>
+      </view>
+    </view>
+    
+    <view class="setting-item">
+      <text class="item-name">定位服务</text>
+      <view class="item-right">
+        <switch checked="{{locationEnabled}}" color="#4169E1" bindchange="toggleLocation"></switch>
+      </view>
+    </view>
+    
+    <view class="setting-item" bindtap="clearCache">
+      <text class="item-name">清除缓存</text>
+      <view class="item-right">
+        <text class="item-value">{{cacheSize}}</text>
+        <text class="item-arrow">></text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 关于 -->
+  <view class="section-title">关于</view>
+  <view class="setting-list">
+    <view class="setting-item" bindtap="navigateTo" data-url="/pages/setting-version/index">
+      <text class="item-name">版本信息</text>
+      <view class="item-right">
+        <text class="item-value">{{versionInfo}}</text>
+        <text class="item-arrow">></text>
+      </view>
+    </view>
+    
+    <view class="setting-item" bindtap="navigateTo" data-url="/pages/setting-agreement/index">
+      <text class="item-name">用户协议</text>
+      <view class="item-right">
+        <text class="item-arrow">></text>
+      </view>
+    </view>
+    
+    <view class="setting-item" bindtap="navigateTo" data-url="/pages/setting-privacy/index">
+      <text class="item-name">隐私政策</text>
+      <view class="item-right">
+        <text class="item-arrow">></text>
+      </view>
+    </view>
+    
+    <view class="setting-item" bindtap="navigateTo" data-url="/pages/setting-about/index">
+      <text class="item-name">关于我们</text>
+      <view class="item-right">
+        <text class="item-arrow">></text>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 退出登录 -->
+  <view class="logout-btn" bindtap="logout">
+    <text>退出登录</text>
+  </view>
+</view> 

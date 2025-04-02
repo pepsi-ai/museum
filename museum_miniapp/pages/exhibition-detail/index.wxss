@@ -1,0 +1,598 @@
+/* 容器样式 */
+.container {
+  min-height: 100vh;
+  background-color: #f7f7f7;
+  padding: 0;
+  position: relative;
+  box-sizing: border-box;
+  padding-bottom: 120rpx; /* 为评论输入框留出空间 */
+}
+
+/* 加载中状态样式 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+}
+
+.loading-spinner {
+  width: 80rpx;
+  height: 80rpx;
+  border: 8rpx solid #f3f3f3;
+  border-top: 8rpx solid #4169E1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 30rpx;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+  font-size: 30rpx;
+  color: #666;
+}
+
+/* 顶部展览信息区样式 */
+.header-section {
+  background-color: #fff;
+  padding-bottom: 20rpx;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.header-section.fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.exhibition-banner {
+  width: 100%;
+  height: 380rpx;
+  display: block;
+}
+
+.exhibition-info {
+  padding: 24rpx 30rpx;
+  position: relative;
+}
+
+.exhibition-title {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  line-height: 1.3;
+}
+
+.exhibition-meta {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+
+/* 图标文本样式 */
+.meta-icon-text {
+  font-size: 32rpx;
+  margin-right: 12rpx;
+  width: 36rpx;
+  text-align: center;
+}
+
+.meta-text {
+  font-size: 28rpx;
+  color: #666;
+}
+
+/* 状态标签样式 */
+.status-tag {
+  position: absolute;
+  top: 24rpx;
+  right: 30rpx;
+  padding: 8rpx 24rpx;
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.status-tag.upcoming {
+  background-color: #e6f0ff;
+  color: #4169E1;
+  border: 1rpx solid #b3d1ff;
+}
+
+.status-tag.ongoing {
+  background-color: #e6f7ee;
+  color: #09BB07;
+  border: 1rpx solid #a7e2c3;
+}
+
+.status-tag.ended {
+  background-color: #f8f8f8;
+  color: #999;
+  border: 1rpx solid #ddd;
+}
+
+/* 展览简介样式 */
+.exhibition-intro {
+  padding: 0 30rpx;
+  margin-top: 10rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+  position: relative;
+}
+
+.intro-content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  text-align: justify;
+}
+
+.intro-content.folded {
+  max-height: 180rpx;
+  overflow: hidden;
+  position: relative;
+}
+
+.fold-btn {
+  text-align: center;
+  color: #4169E1;
+  font-size: 28rpx;
+  padding: 16rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fold-icon-text {
+  font-size: 24rpx;
+  margin-left: 8rpx;
+}
+
+/* 时间段选择区样式 */
+.time-section {
+  background-color: #fff;
+  padding: 24rpx 30rpx;
+  margin-top: 20rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 日期选择样式 */
+.date-scroll {
+  white-space: nowrap;
+  margin-bottom: 20rpx;
+}
+
+.date-item {
+  display: inline-block;
+  padding: 16rpx 30rpx;
+  margin-right: 16rpx;
+  background-color: #f5f5f5;
+  border-radius: 12rpx;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.date-item.active {
+  background-color: #4169E1;
+  transform: scale(1.05);
+  box-shadow: 0 4rpx 10rpx rgba(65, 105, 225, 0.3);
+}
+
+.date-item.active .date-day,
+.date-item.active .date-week {
+  color: #fff;
+}
+
+.date-item.disabled {
+  background-color: #f0f0f0;
+  color: #ccc;
+  opacity: 0.7;
+}
+
+.date-day {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 6rpx;
+}
+
+.date-week {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 时间段选择样式 */
+.time-scroll {
+  white-space: nowrap;
+}
+
+/* 时间段显示的样式 */
+.time-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 160rpx;
+  height: 120rpx;
+  margin-right: 20rpx;
+  background-color: #f8f8f8;
+  border-radius: 12rpx;
+  padding: 16rpx;
+  box-sizing: border-box;
+  transition: all 0.3s;
+}
+
+.time-item.active {
+  background-color: #4169E1;
+  color: white;
+}
+
+.time-item.disabled {
+  opacity: 0.6;
+  color: #999;
+}
+
+.time-range {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.available-slots {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.time-item.active .available-slots {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* 时间段加载状态 */
+.time-slots-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120rpx;
+  margin: 20rpx 0;
+}
+
+.loading-spinner-small {
+  width: 40rpx;
+  height: 40rpx;
+  border: 4rpx solid #f3f3f3;
+  border-top: 4rpx solid #4169E1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 12rpx;
+}
+
+.loading-text-small {
+  font-size: 28rpx;
+  color: #666;
+}
+
+/* 自定义样式：未发布状态 */
+.time-item .available-slots {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 添加特定样式，令暂未发布的显示更加明显 */
+.time-item:not(.disabled):not(.active) .available-slots {
+  color: #666;
+}
+
+/* 藏品列表区样式 */
+.collections-section {
+  background-color: #fff;
+  padding: 24rpx 30rpx;
+  margin-top: 20rpx;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.collections-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 16rpx;
+}
+
+.collection-item {
+  width: 48%;
+  background-color: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.2s;
+}
+
+.collection-item:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 1rpx 3rpx rgba(0, 0, 0, 0.1);
+}
+
+.collection-image {
+  width: 100%;
+  height: 240rpx;
+  display: block;
+}
+
+/* 无图片状态样式 */
+.collection-image.no-image {
+  background-color: #f0f0f0;
+  color: #999;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.collection-info {
+  padding: 16rpx;
+}
+
+.collection-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.collection-dynasty {
+  font-size: 24rpx;
+  color: #4169E1;
+  margin-bottom: 6rpx;
+}
+
+.collection-desc {
+  font-size: 24rpx;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* 底部预约按钮样式 */
+.bottom-bar {
+  display: none;
+}
+
+/* 预约人数选择弹窗 */
+.action-sheet-item {
+  text-align: center;
+  font-size: 32rpx;
+  color: #333;
+  line-height: 100rpx;
+}
+
+.action-sheet-item:active {
+  background-color: #f5f5f5;
+}
+
+/* 底部提示样式 */
+.loading, .no-more, .empty {
+  padding: 20rpx 0;
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+}
+
+.empty {
+  padding: 60rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.empty-icon-text {
+  font-size: 60rpx;
+  margin-bottom: 16rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.meta-icon {
+  width: 42rpx;
+  height: 42rpx;
+  margin-right: 12rpx;
+}
+
+/* 评论区域 */
+.comment-section {
+  background-color: #fff;
+  padding: 20rpx 30rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.comment-list {
+  margin-top: 10rpx;
+}
+
+.comment-item {
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.comment-item:last-child {
+  border-bottom: none;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.comment-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
+}
+
+.comment-user-info {
+  flex: 1;
+}
+
+.comment-nickname {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+}
+
+.comment-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.comment-content {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.5;
+  margin-bottom: 15rpx;
+}
+
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-action {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 16rpx;
+  margin-right: 15rpx;
+}
+
+.delete-icon {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.like-action {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 16rpx;
+}
+
+.like-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
+}
+
+.like-count {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.no-comment {
+  padding: 30rpx 0;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 评论输入框 */
+.comment-input-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 20rpx;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.comment-input {
+  flex: 1;
+  height: 72rpx;
+  background-color: #f5f5f5;
+  border-radius: 36rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+}
+
+.send-btn {
+  width: 140rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: #4169E1;
+  color: #fff;
+  font-size: 30rpx;
+  margin-left: 20rpx;
+  padding: 0;
+  border-radius: 40rpx;
+}
+
+/* 时间段预约按钮样式 */
+.reserve-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+}
+
+.reserve-btn-inline {
+  width: 40% !important;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  color: #fff;
+  background: #4169E1;
+  border-radius: 40rpx;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.reserve-btn-inline.disabled {
+  background: #ccc;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.reserve-btn-inline.ended {
+  background: #999;
+  color: #fff;
+  opacity: 0.8;
+}
+
+/* 按钮点击效果 */
+.reserve-btn-inline:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}

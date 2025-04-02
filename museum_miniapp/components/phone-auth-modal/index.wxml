@@ -1,0 +1,16 @@
+<view class="phone-modal" wx:if="{{show}}">
+  <view class="modal-content">
+    <view class="modal-header">
+      <image class="app-icon" src="/images/logo.jpeg" />
+      <view class="app-name">河南博物院预约小程序</view>
+    </view>
+    <view class="modal-title">申请获取并验证你的手机号</view>
+    <view class="modal-subtitle">账号注册及登录</view>
+    <view class="phone-number">{{phoneNumber}}</view>
+    <view class="modal-buttons">
+      <button class="btn-cancel" bindtap="onReject">不允许</button>
+      <button class="btn-confirm" bindtap="onConfirm">允许</button>
+    </view>
+    <view class="other-phone" bindtap="onUseOtherPhone">使用其他号码</view>
+  </view>
+</view> 

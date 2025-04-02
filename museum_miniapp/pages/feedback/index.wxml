@@ -1,0 +1,71 @@
+<view class="container">
+  <view class="feedback-section">
+    <view class="section-title">反馈类型</view>
+    <view class="feedback-types">
+      <view class="type-item" bindtap="onTypeSelect" data-type="功能建议">
+        <view class="radio {{selectedType === '功能建议' ? 'selected' : ''}}"></view>
+        <text>功能建议</text>
+      </view>
+      <view class="type-item" bindtap="onTypeSelect" data-type="界面优化">
+        <view class="radio {{selectedType === '界面优化' ? 'selected' : ''}}"></view>
+        <text>界面优化</text>
+      </view>
+      <view class="type-item" bindtap="onTypeSelect" data-type="体验问题">
+        <view class="radio {{selectedType === '体验问题' ? 'selected' : ''}}"></view>
+        <text>体验问题</text>
+      </view>
+      <view class="type-item" bindtap="onTypeSelect" data-type="其他问题">
+        <view class="radio {{selectedType === '其他问题' ? 'selected' : ''}}"></view>
+        <text>其他问题</text>
+      </view>
+    </view>
+  </view>
+  
+  <view class="feedback-section">
+    <view class="section-title">反馈内容</view>
+    <view class="content-area">
+      <textarea 
+        placeholder="请详细描述您的问题和建议..." 
+        placeholder-class="placeholder" 
+        maxlength="500" 
+        bindinput="onContentInput"
+        value="{{content}}"
+      ></textarea>
+      <view class="word-count">{{contentLength}}/500</view>
+    </view>
+  </view>
+  
+  <view class="feedback-section">
+    <view class="section-title">上传图片 (选填，最多4张)</view>
+    <view class="image-uploader">
+      <view class="image-list">
+        <view class="image-item" wx:for="{{images}}" wx:key="index">
+          <image src="{{item}}" mode="aspectFill" bindtap="previewImage" data-index="{{index}}"></image>
+          <view class="delete-btn" catchtap="deleteImage" data-index="{{index}}">×</view>
+        </view>
+        <view class="upload-btn" bindtap="chooseImage" wx:if="{{images.length < 4}}">
+          <view class="upload-icon">
+            <view class="camera-icon"></view>
+          </view>
+          <text>添加图片</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="feedback-section">
+    <view class="section-title">联系方式</view>
+    <view class="contact-input">
+      <input 
+        placeholder="请留下您的联系方式 (选填)" 
+        placeholder-class="placeholder" 
+        bindinput="onContactInput"
+        value="{{contact}}"
+      ></input>
+    </view>
+  </view>
+  
+  <view class="submit-btn" bindtap="submitFeedback">
+    <text>提交反馈</text>
+  </view>
+</view> 

@@ -1,0 +1,63 @@
+<view class="login-container">
+  <!-- Logo区域 -->
+  <view class="logo-area">
+    <image class="logo" src="/images/login/logo.jpeg" mode="aspectFit"></image>
+    <text class="brand-name">河南博物院</text>
+  </view>
+
+  <!-- 登录表单 -->
+  <view class="login-form">
+    <!-- 手机号输入框 -->
+    <view class="input-item">
+      <image class="input-icon" src="/images/login/user.png"></image>
+      <input type="number" 
+             placeholder="请输入用户名/手机号" 
+             placeholder-class="placeholder"
+             model:value="{{phone}}"
+             maxlength="11"/>
+    </view>
+
+    <!-- 密码输入框 -->
+    <view class="input-item">
+      <image class="input-icon" src="/images/login/lock.png"></image>
+      <input type="{{showPassword ? 'text' : 'password'}}"
+             placeholder="请输入密码" 
+             placeholder-class="placeholder"
+             model:value="{{password}}"/>
+      <image class="eye-icon" 
+             src="/images/login/{{showPassword ? 'eye.png' : 'eye-close.png'}}"
+             bindtap="togglePasswordVisibility"></image>
+    </view>
+
+    <!-- 验证码输入框 -->
+    <view class="input-item">
+      <image class="input-icon" src="/images/login/verify.png"></image>
+      <input type="text" 
+             placeholder="请输入验证码" 
+             placeholder-class="placeholder"
+             model:value="{{verifyCode}}"
+             maxlength="6"/>
+      <text class="verify-code">{{captchaText}}</text>
+    </view>
+
+    <!-- 记住登录选项 -->
+    <view class="remember-row">
+      <view class="checkbox-wrap" bindtap="toggleRemember">
+        <image class="checkbox-icon" src="/images/login/{{remember ? 'checked.png' : 'unchecked.png'}}"></image>
+        <text>记住登录</text>
+      </view>
+      <text class="forget-pwd" bindtap="onForgetPassword">忘记密码？</text>
+    </view>
+
+    <!-- 登录按钮 -->
+    <button class="login-btn" bindtap="onLogin">登录</button>
+  </view>
+
+  <!-- 底部协议 -->
+  <view class="agreement">
+    <text class="agreement-text">登录即表示同意</text>
+    <text class="agreement-link" bindtap="onUserAgreement">《用户协议》</text>
+    <text class="agreement-text">和</text>
+    <text class="agreement-link" bindtap="onPrivacyPolicy">《隐私政策》</text>
+  </view>
+</view> 

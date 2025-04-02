@@ -1,0 +1,58 @@
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-info" bindtap="handlePageAccess" data-page="/pages/login/index">
+    <view class="user-info-content">
+      <image class="avatar" src="{{userInfo.avatarUrl || '/images/mine/head.png'}}" />
+      <view class="info-wrap">
+        <text class="nickname {{isLogin ? 'logged-in' : 'not-logged-in'}}">{{isLogin ? userInfo.username : '未登录'}}</text>
+        <text class="user-id" wx:if="{{isLogin}}">用户ID：{{userId || userInfo.id || '未知'}}</text>
+      </view>
+    </view>
+    <view class="arrow">></view>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="menu-list">
+    <view class="menu-item" bindtap="handlePageAccess" data-page="/pages/my-reservations/index">
+      <image class="menu-icon" src="/images/mine/reservation.png" />
+      <text class="menu-text">我的预约</text>
+      <view class="arrow">></view>
+    </view>
+
+    <view class="menu-item" bindtap="handlePageAccess" data-page="/pages/my-collections/index">
+      <image class="menu-icon" src="/images/mine/love.png" />
+      <text class="menu-text">我的收藏</text>
+      <view class="arrow">></view>
+    </view>
+
+    <view class="menu-item" bindtap="handlePageAccess" data-page="/pages/view-history/index">
+      <image class="menu-icon" src="/images/mine/view.png" />
+      <text class="menu-text">浏览历史</text>
+      <view class="arrow">></view>
+    </view>
+
+    <view class="menu-item" bindtap="handlePageAccess" data-page="/pages/feedback/index">
+      <image class="menu-icon" src="/images/mine/feedback.png" />
+      <text class="menu-text">意见反馈</text>
+      <view class="arrow">></view>
+    </view>
+
+    <view class="menu-item" bindtap="handlePageAccess" data-page="/pages/setting/index">
+      <image class="menu-icon" src="/images/mine/setting.png" />
+      <text class="menu-text">设置</text>
+      <view class="arrow">></view>
+    </view>
+  </view>
+
+  <!-- 隐私协议弹窗 -->
+  <privacy-modal show="{{showPrivacyModal}}" 
+                 bind:agree="onPrivacyAgree"
+                 bind:reject="onPrivacyReject" />
+
+  <!-- 手机号授权弹窗 -->
+  <phone-auth-modal show="{{showPhoneModal}}"
+                    phone-number="{{phoneNumber}}"
+                    bind:confirm="onPhoneConfirm"
+                    bind:reject="onPhoneReject"
+                    bind:useOtherPhone="onUseOtherPhone" />
+</view> 

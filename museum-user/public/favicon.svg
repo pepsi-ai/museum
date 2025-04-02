@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Museum Icon -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#409EFF" />
+      <stop offset="100%" stop-color="#67C23A" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Museum Building Icon -->
+  <g>
+    <!-- Roof -->
+    <polygon points="10,35 50,5 90,35" fill="url(#gradient)"/>
+    
+    <!-- Columns -->
+    <rect x="20" y="35" width="12" height="50" rx="2" ry="2" fill="#409EFF"/>
+    <rect x="44" y="35" width="12" height="50" rx="2" ry="2" fill="#409EFF"/>
+    <rect x="68" y="35" width="12" height="50" rx="2" ry="2" fill="#409EFF"/>
+    
+    <!-- Base -->
+    <rect x="15" y="85" width="70" height="7" rx="2" ry="2" fill="#409EFF"/>
+    <rect x="12" y="92" width="76" height="5" rx="1" ry="1" fill="#409EFF"/>
+  </g>
+</svg> 
